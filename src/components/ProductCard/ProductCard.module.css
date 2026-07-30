@@ -1,29 +1,53 @@
 .card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    position: relative;
+    display: block;
+    overflow: visible;
+    max-height: 15rem;
 
-    padding: 1rem;
     color: inherit;
     text-decoration: none;
 
-    background-color: lightgray;
-    border: 1px solid gray;
-    border-radius: 0.75rem;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
 
-    transition: box-shadow 0.15s ease, transform 0.15s ease;
+    transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+
+.card::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
 }
 
 .card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: var(--color-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
 }
 
-.imagePlaceholder {
-    aspect-ratio: 1 / 1;
-    max-height: 9rem;
-    background-color: #eee;
-    border-radius: 0.5rem;
+.image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    background-color: var(--color-bg);
+    border-radius: var(--radius);
+}
+
+.info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding: 0.75rem 1rem;
+
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .brand {
@@ -33,10 +57,12 @@
 
 .model {
     margin: 0;
-    color: gray;
+    color: var(--color-text-light);
+    font-size: 0.875rem;
 }
 
 .price {
     margin: 0.25rem 0 0;
+    color: var(--color-primary);
     font-weight: 700;
 }

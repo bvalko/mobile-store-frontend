@@ -1,7 +1,13 @@
 .backLink {
     display: inline-block;
     margin-bottom: 1.5rem;
-    color: inherit;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.backLink:hover {
+    text-decoration: underline;
 }
 
 .detailsView {
@@ -16,8 +22,8 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     object-fit: contain;
-    background-color: #eee;
-    border-radius: 0.75rem;
+    background-color: var(--color-bg);
+    border-radius: var(--radius);
 
     position: sticky;
     top: 1.5rem;
@@ -31,8 +37,8 @@
 .description {
     padding: 1.5rem;
     background-color: white;
-    border: 1px solid lightgray;
-    border-radius: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
 }
 
 .title {
@@ -42,6 +48,7 @@
 
 .price {
     margin: 0.25rem 0 1rem;
+    color: var(--color-primary);
     font-size: 1.5rem;
     font-weight: 700;
 }
@@ -61,7 +68,7 @@
 }
 
 .specRow dt {
-    color: gray;
+    color: var(--color-text-light);
 }
 
 .specRow dd {
@@ -75,8 +82,8 @@
     gap: 1.25rem;
     padding: 1.5rem;
     background-color: white;
-    border: 1px solid lightgray;
-    border-radius: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
 }
 
 .optionGroup {
@@ -100,16 +107,23 @@
 
     padding: 0.5rem 0.75rem;
     background-color: white;
-    border: 1px solid lightgray;
+    border: 1px solid var(--color-border);
     border-radius: 0.5rem;
     cursor: pointer;
+
+    transition: border-color 0.15s ease;
+}
+
+.optionLabel:has(input:checked) {
+    border-color: var(--color-primary);
+    background-color: #eff4ff;
 }
 
 .colorSwatch {
     width: 0.9rem;
     height: 0.9rem;
     border-radius: 50%;
-    border: 1px solid lightgray;
+    border: 1px solid var(--color-border);
 }
 
 .addButton {
@@ -119,14 +133,16 @@
     color: white;
     font-weight: 600;
 
-    background-color: #1d1d1f;
+    background-color: var(--color-primary);
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
+
+    transition: background-color 0.15s ease;
 }
 
 .addButton:hover {
-    background-color: #333;
+    background-color: var(--color-primary-dark);
 }
 
 @media (max-width: 768px) {
