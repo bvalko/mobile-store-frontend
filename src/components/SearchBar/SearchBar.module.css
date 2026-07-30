@@ -1,0 +1,22 @@
+.search {
+    display: grid;
+}
+
+.label {
+    font-size: 1rem;
+    font-weight: 600;
+    justify-content: right;
+}
+
+.input {
+    padding: 0.5rem 0.5rem;
+
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 0.5rem;
+}
+
+.input:focus {
+    border-color: gray;
+    outline: 3px solid (lightgray);
+}
