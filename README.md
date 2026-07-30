@@ -16,6 +16,17 @@ It consists on a 2-view (PLP:Product List Page; PDP: Product Details Page) SPA b
 pnpm install
 ```
 
+This single command installs everything needed to run, build, lint and test the project (Vitest, React Testing Library, jsdom included).
+
+### Environment variables
+
+The app needs the base URL of the product API. Copy the following example (and fill it with the real host) in an .env file in this project:
+
+```
+VITE_API_BASE_URL=https://your-api-host-here
+```
+
+
 ### Development
 
 ```bash
@@ -30,6 +41,16 @@ pnpm build
 pnpm test
 pnpm lint
 ```
+
+#### Testing
+
+Tests are written with [Vitest](https://vitest.dev) and [React Testing Library](https://testing-library.com/react). Each test lives next to their respective code (`*.test.js` / `*.test.jsx`).
+
+```bash
+pnpm test         # runs the full suite once
+pnpm test:watch   # re-runs on file changes (useful for developing)
+```
+
 
 ### Technology
 
