@@ -1,8 +1,13 @@
-import { Route, Routes, Link } from 'react-router';
+import { Route, Routes, Link, useParams } from 'react-router';
 
 import { AppLayout } from '../components/AppLayout/AppLayout';
 import { ProductDetailsPage } from '../pages/ProductDetailsPage';
 import { ProductListPage } from '../pages/ProductListPage';
+
+function ProductDetailsRoute() {
+    const { id } = useParams();
+    return <ProductDetailsPage key={id} />;
+}
 
 function NotFoundPage() {
     return (
@@ -20,7 +25,7 @@ export function AppRouter() {
         <Routes>
             <Route element={<AppLayout />}>
                 <Route index element={<ProductListPage />} />
-                <Route path="/product/:id" element={<ProductDetailsPage />} />
+                <Route path="/product/:id" element={<ProductDetailsRoute />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Route>
         </Routes>

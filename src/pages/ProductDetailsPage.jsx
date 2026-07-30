@@ -1,17 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 
-import { mockProducts } from '../mocks/products';
+import { getProductById, addToCart } from '../api/products';
+import { useCart } from '../context/useCart';
+import { useBreadcrumb } from '../context/useBreadcrumb';
 import styles from './ProductDetailsPage.module.css';
 
 export function ProductDetailsPage() {
     const { id } = useParams();
-    const product = mockProducts.find((item) => item.id === id);
+    const { updateCartCount } = useCart();
+    const { setBreadcrumbLabel } = useBreadcrumb();
 
-    const [selectedStorage, setSelectedStorage] = useState(product?.storageOptions[0].code);
-    const [selectedColor, setSelectedColor] = useState(product?.colorOptions[0].code);
+    const [product, setProduct] = useState(null);
+    const [status, setStatus] = useState('loading');
+    const [selectedStorage, setSelectedStorage] = useState(null);
+    const [selectedColor, setSelectedColor] = useState(null);
 
-    if (!product) {
+    useEffect(() => {
+        getProductById(id)
+            .then((data) => {
+                setProduct(data);
+                setSelectedStorage(data.storageOptions[0]?.code ?? null);
+                setSelectedColor(data.colorOptions[0]?.code ?? null);
+                setStatus('success');
+                setBreadcrumbLabel(`${data.brand} ${data.model}`);
+            })
+            .catch(() => setStatus('error'));
+
+        return () => setBreadcrumbLabel(null);
+    }, [id, setBreadcrumbLabel]);
+
+    if (status === 'loading') {
+        return (
+            <section>
+                <p>Loading product…</p>
+            </section>
+        );
+    }
+
+    if (status === 'error' || !product) {
         return (
             <section>
                 <p>Product not found.</p>
@@ -24,6 +51,7 @@ export function ProductDetailsPage() {
         brand,
         model,
         price,
+        image,
         cpu,
         ram,
         os,
@@ -37,11 +65,15 @@ export function ProductDetailsPage() {
     } = product;
 
     const handleAddToCart = () => {
-        console.log('Add to cart', {
+        addToCart({
             id: product.id,
             colorCode: selectedColor,
             storageCode: selectedStorage,
-        });
+        })
+            .then((response) => updateCartCount(response.count))
+            .catch(() => {
+                // Adding to cart failed; the cart count is left untouched.
+            });
     };
 
     return (
@@ -51,7 +83,7 @@ export function ProductDetailsPage() {
             </Link>
 
             <div className={styles.detailsView}>
-                <div className={styles.imagePlaceholder} aria-hidden="true" />
+                <img className={styles.imagePlaceholder} src={image} alt={`${brand} ${model}`} />
 
                 <div className={styles.info}>
                     <div className={styles.description}>
@@ -134,7 +166,7 @@ export function ProductDetailsPage() {
                                     />
                                     <span
                                         className={styles.colorSwatch}
-                                        style={{ backgroundColor: option.hex }}
+                                        style={{ backgroundColor: option.label }}
                                         aria-hidden="true"
                                     />
                                     {option.label}

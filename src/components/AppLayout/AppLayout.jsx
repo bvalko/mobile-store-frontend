@@ -1,16 +1,22 @@
 import { Outlet } from 'react-router';
 
 import { Header } from '../Header/Header.jsx';
+import { CartProvider } from '../../context/CartProvider';
+import { BreadcrumbProvider } from '../../context/BreadcrumbProvider';
 import styles from './AppLayout.module.css';
 
 export function AppLayout() {
     return (
-        <div className={styles.shell}>
-            <Header cartCount={0} />
+        <CartProvider>
+            <BreadcrumbProvider>
+                <div className={styles.shell}>
+                    <Header />
 
-            <main className={styles.main}>
-                <Outlet />
-            </main>
-        </div>
+                    <main className={styles.main}>
+                        <Outlet />
+                    </main>
+                </div>
+            </BreadcrumbProvider>
+        </CartProvider>
     );
 }

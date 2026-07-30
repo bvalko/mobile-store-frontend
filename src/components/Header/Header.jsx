@@ -1,9 +1,13 @@
 import { Link, useLocation } from "react-router";
 
+import { useCart } from '../../context/useCart';
+import { useBreadcrumb } from '../../context/useBreadcrumb';
 import styles from './Header.module.css';
 
-export function Header({ cartCount=0}) {
+export function Header() {
     const { pathname } = useLocation();
+    const { cartCount } = useCart();
+    const { breadcrumbLabel } = useBreadcrumb();
 
     const isProductList = pathname === '/';
     const isProductDetails = pathname.startsWith('/product/');
@@ -11,7 +15,7 @@ export function Header({ cartCount=0}) {
     let currentPage = 'Page not found';
 
     if (isProductDetails) {
-        currentPage = 'Product details';
+        currentPage = breadcrumbLabel ?? 'Product details';
     }
 
     return (
