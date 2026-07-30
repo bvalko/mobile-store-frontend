@@ -8,7 +8,7 @@ import styles from './ProductDetailsPage.module.css';
 
 export function ProductDetailsPage() {
     const { id } = useParams();
-    const { updateCartCount } = useCart();
+    const { cartCount, updateCartCount } = useCart();
     const { setBreadcrumbLabel } = useBreadcrumb();
 
     const [product, setProduct] = useState(null);
@@ -70,7 +70,7 @@ export function ProductDetailsPage() {
             colorCode: selectedColor,
             storageCode: selectedStorage,
         })
-            .then((response) => updateCartCount(response.count))
+            .then((response) => updateCartCount(cartCount + response.count))
             .catch(() => {
                 // Adding to cart failed; the cart count is left untouched.
             });
